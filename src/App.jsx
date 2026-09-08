@@ -8,7 +8,6 @@ import About from './components/About'
 import HowToOrder from './components/HowToOrder'
 import OrderForm from './components/OrderForm'
 import Footer from './components/Footer'
-import CursorTrail from './components/CursorTrail'
 import { useReducedMotion } from './hooks/useReducedMotion'
 
 export default function App() {
@@ -23,7 +22,6 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      <CursorTrail enabled={!reduced} />
       <Navbar />
       <main>
         <Hero />
