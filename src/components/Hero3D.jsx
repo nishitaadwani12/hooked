@@ -13,27 +13,29 @@ const BALLS = [
   { pos: [0.9, -0.9, 0.4], scale: 0.55, color: '#FCE38A', strand: '#E8C64A' },
 ]
 
-// A soft sphere wrapped in a few thin strands so it reads as a real wound
-// ball of yarn — still just primitive geometry, so it stays light.
-const WRAPS = [
-  [0.2, 0.4, 0.1],
-  [1.1, 0.9, 0.5],
-  [0.6, 1.7, 1.2],
-  [1.9, 0.3, 0.8],
-]
+// Densely wind a sphere with many overlapping strands at golden-angle
+// rotations so it reads as a full, tightly-wound ball of yarn (not a bare
+// sphere). Still just primitive geometry, so it stays light and fast.
+const WRAP_COUNT = 22
+const GOLDEN = 2.399963 // golden angle in radians — spreads wraps evenly
+const WRAPS = Array.from({ length: WRAP_COUNT }, (_, i) => ({
+  rot: [i * GOLDEN, i * GOLDEN * 0.5, i * 1.13],
+  r: 0.6 + (i % 3) * 0.012, // slight radius variation so layers overlap
+}))
 
 function YarnBall({ pos, scale, color, strand }) {
   return (
     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.9}>
       <group position={pos} scale={scale}>
+        {/* Inner core, slightly darker so gaps between strands read as depth. */}
         <mesh castShadow receiveShadow>
-          <sphereGeometry args={[0.62, 48, 48]} />
-          <meshStandardMaterial color={color} roughness={0.95} metalness={0} />
+          <sphereGeometry args={[0.58, 40, 40]} />
+          <meshStandardMaterial color={strand} roughness={1} metalness={0} />
         </mesh>
-        {WRAPS.map((rot, i) => (
-          <mesh key={i} rotation={rot}>
-            <torusGeometry args={[0.62, 0.045, 12, 80]} />
-            <meshStandardMaterial color={strand} roughness={0.9} metalness={0} />
+        {WRAPS.map((w, i) => (
+          <mesh key={i} rotation={w.rot} castShadow>
+            <torusGeometry args={[w.r, 0.072, 10, 72]} />
+            <meshStandardMaterial color={color} roughness={0.95} metalness={0} />
           </mesh>
         ))}
       </group>

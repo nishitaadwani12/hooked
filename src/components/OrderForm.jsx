@@ -14,27 +14,45 @@ export default function OrderForm({ selected }) {
     if (selected) setItem(selected.name)
   }, [selected])
 
-  const configured = Boolean(site.formspreeId)
-
   const onSubmit = async (e) => {
     e.preventDefault()
-    if (!configured) return
-    setStatus('sending')
-    try {
-      const res = await fetch(`https://formspree.io/f/${site.formspreeId}`, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(formRef.current),
-      })
-      if (res.ok) {
-        setStatus('ok')
-        formRef.current.reset()
-        setItem('')
-      } else {
+    const data = new FormData(formRef.current)
+
+    // Preferred: Formspree posts the order to your inbox without leaving the page.
+    if (site.formspreeId) {
+      setStatus('sending')
+      try {
+        const res = await fetch(`https://formspree.io/f/${site.formspreeId}`, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        })
+        if (res.ok) {
+          setStatus('ok')
+          formRef.current.reset()
+          setItem('')
+        } else {
+          setStatus('error')
+        }
+      } catch {
         setStatus('error')
       }
-    } catch {
-      setStatus('error')
+      return
+    }
+
+    // Fallback: open the visitor's email app with the order details prefilled.
+    if (site.email) {
+      const body = [...data.entries()].map(([k, v]) => `${k}: ${v}`).join('\n')
+      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+        `New order — ${site.brand}`,
+      )}&body=${encodeURIComponent(body)}`
+      setStatus('ok')
+      return
+    }
+
+    // Last resort: send them to Instagram to message you directly.
+    if (site.instagram) {
+      window.open(`https://instagram.com/${site.instagram}`, '_blank', 'noopener')
     }
   }
 
@@ -103,10 +121,12 @@ export default function OrderForm({ selected }) {
               />
             </label>
 
-            {!configured && (
+            {/* Setup reminder — shown ONLY on your local machine while developing,
+                never on the live site. */}
+            {import.meta.env.DEV && !site.formspreeId && !site.email && (
               <p className="rounded-2xl bg-butter/50 px-4 py-3 text-sm font-semibold text-cocoa">
-                ⚙️ Almost there — add your free Formspree ID in <code>src/config.js</code> to start
-                receiving orders by email.
+                ⚙️ Local reminder (hidden on the live site): add a Formspree ID or email in{' '}
+                <code>src/config.js</code> so orders reach you.
               </p>
             )}
             {status === 'ok' && (
@@ -122,7 +142,7 @@ export default function OrderForm({ selected }) {
 
             <button
               type="submit"
-              disabled={!configured || status === 'sending'}
+              disabled={status === 'sending'}
               className="btn-primary mt-1 w-full disabled:cursor-not-allowed disabled:opacity-60"
             >
               {status === 'sending' ? 'Sending…' : 'Send order request'}
