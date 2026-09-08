@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-cocoa font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  /* Respect users who ask for less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-cocoa px-6 py-3
+      font-semibold text-cream shadow-soft transition
+      hover:-translate-y-0.5 hover:shadow-lift focus-visible:outline focus-visible:outline-2
+      focus-visible:outline-offset-2 focus-visible:outline-cocoa;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-cocoa/20
+      bg-white/70 px-6 py-3 font-semibold text-cocoa transition
+      hover:-translate-y-0.5 hover:border-cocoa/40 focus-visible:outline focus-visible:outline-2
+      focus-visible:outline-offset-2 focus-visible:outline-cocoa;
+  }
+
+  .section {
+    @apply mx-auto max-w-6xl px-5 py-20 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply mb-3 inline-block rounded-full bg-white/70 px-3 py-1 text-xs font-bold uppercase
+      tracking-widest text-cocoa/70;
+  }
+}
+
+/* Subtle knitted-dot texture used behind sections. */
+.yarn-dots {
+  background-image: radial-gradient(rgba(91, 75, 87, 0.08) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
