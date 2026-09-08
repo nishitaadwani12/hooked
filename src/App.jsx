@@ -6,6 +6,7 @@ import Featured from './components/Featured'
 import Catalog from './components/Catalog'
 import About from './components/About'
 import HowToOrder from './components/HowToOrder'
+import Reviews from './components/Reviews'
 import OrderForm from './components/OrderForm'
 import Footer from './components/Footer'
 import { useReducedMotion } from './hooks/useReducedMotion'
@@ -22,6 +23,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
+      <div className="grain-overlay" aria-hidden="true" />
       <Navbar />
       <main>
         <Hero />
@@ -30,6 +32,7 @@ export default function App() {
         <Catalog onOrder={handleOrder} />
         <About />
         <HowToOrder />
+        <Reviews />
         <OrderForm selected={selected} />
       </main>
       <Footer />

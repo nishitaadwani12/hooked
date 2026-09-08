@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { categories, products } from '../data/products'
 import ProductCard from './ProductCard'
 import Reveal from './Reveal'
+import Scallop from './Scallop'
 
 export default function Catalog({ onOrder }) {
   const [active, setActive] = useState('All')
@@ -13,8 +14,10 @@ export default function Catalog({ onOrder }) {
   )
 
   return (
-    <section id="catalog" className="yarn-dots">
-      <div className="section">
+    <section id="catalog" className="relative">
+      <Scallop />
+      <div className="yarn-dots bg-[#FDF3EE]">
+        <div className="section">
         <Reveal>
           <span className="eyebrow">The shop</span>
           <h2 className="text-4xl font-extrabold text-cocoa sm:text-5xl">Browse the collection</h2>
@@ -49,7 +52,9 @@ export default function Catalog({ onOrder }) {
             ))}
           </AnimatePresence>
         </motion.div>
+        </div>
       </div>
+      <Scallop flip />
     </section>
   )
 }

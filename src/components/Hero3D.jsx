@@ -7,20 +7,36 @@ import { Float, ContactShadows, Environment } from '@react-three/drei'
 // it stays tiny and fast on phones.
 
 const BALLS = [
-  { pos: [0, 0.2, 0], scale: 1.15, color: '#FFD1DC' },
-  { pos: [-1.9, -0.5, -0.6], scale: 0.7, color: '#B5D8CC' },
-  { pos: [1.8, 0.4, -0.8], scale: 0.8, color: '#A6C1EE' },
-  { pos: [0.9, -0.9, 0.4], scale: 0.55, color: '#FCE38A' },
+  { pos: [0, 0.2, 0], scale: 1.15, color: '#FFB8CB', strand: '#F58BA6' },
+  { pos: [-1.9, -0.5, -0.6], scale: 0.7, color: '#B5D8CC', strand: '#87BBA9' },
+  { pos: [1.8, 0.4, -0.8], scale: 0.8, color: '#A6C1EE', strand: '#7C9BE0' },
+  { pos: [0.9, -0.9, 0.4], scale: 0.55, color: '#FCE38A', strand: '#E8C64A' },
 ]
 
-function YarnBall({ pos, scale, color }) {
+// A soft sphere wrapped in a few thin strands so it reads as a real wound
+// ball of yarn — still just primitive geometry, so it stays light.
+const WRAPS = [
+  [0.2, 0.4, 0.1],
+  [1.1, 0.9, 0.5],
+  [0.6, 1.7, 1.2],
+  [1.9, 0.3, 0.8],
+]
+
+function YarnBall({ pos, scale, color, strand }) {
   return (
-    <Float speed={2} rotationIntensity={0.6} floatIntensity={0.8}>
-      <mesh position={pos} scale={scale} castShadow>
-        {/* A knotted torus reads as a wound ball of yarn. */}
-        <torusKnotGeometry args={[0.6, 0.26, 160, 24, 2, 3]} />
-        <meshStandardMaterial color={color} roughness={0.85} metalness={0} />
-      </mesh>
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.9}>
+      <group position={pos} scale={scale}>
+        <mesh castShadow receiveShadow>
+          <sphereGeometry args={[0.62, 48, 48]} />
+          <meshStandardMaterial color={color} roughness={0.95} metalness={0} />
+        </mesh>
+        {WRAPS.map((rot, i) => (
+          <mesh key={i} rotation={rot}>
+            <torusGeometry args={[0.62, 0.045, 12, 80]} />
+            <meshStandardMaterial color={strand} roughness={0.9} metalness={0} />
+          </mesh>
+        ))}
+      </group>
     </Float>
   )
 }
@@ -38,8 +54,8 @@ function Scene() {
 
   return (
     <group ref={group}>
-      {BALLS.map((b, i) => (
-        <YarnBall key={i} {...b} />
+      {BALLS.map((b) => (
+        <YarnBall key={b.color + b.pos.join()} {...b} />
       ))}
     </group>
   )
