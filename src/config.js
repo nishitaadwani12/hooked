@@ -5,9 +5,9 @@
 
 export const site = {
   brand: 'Hooked',
-  tagline: 'Handmade crochet, made just for you.',
+  tagline: 'Little handmade crochet things, made just for you.',
   intro:
-    'Cute, cozy, one-of-a-kind crochet — amigurumi, bags, accessories and home decor, hand-stitched to order with love.',
+    "Cute, cosy crochet made by hand. Amigurumi, bags, accessories and little bits for your home, all stitched to order with a lot of love.",
 
   // How customers reach you. Your phone number is NEVER shown on the site.
   //

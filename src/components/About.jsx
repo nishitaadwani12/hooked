@@ -29,9 +29,10 @@ export default function About() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-4 text-cocoa/70">
-              Hooked started as a love for yarn and a hook. Each piece is crocheted one stitch at a
-              time, in the colours you choose, using soft, skin-friendly cotton. No factories, no
-              two exactly alike — just handmade things made to be kept.
+              Hooked started with a love for yarn and one little hook. Every piece is crocheted by
+              hand, one stitch at a time, in the colours you pick, using soft cotton that's kind to
+              skin. Nothing's mass produced and no two turn out exactly the same. They're just
+              handmade things, made to be kept.
             </p>
           </Reveal>
           <Reveal delay={0.2}>

@@ -10,7 +10,7 @@ const reviews = [
     tag: 'Cuddle Bunny',
   },
   {
-    quote: 'Loved that I could pick my own colours. Arrived beautifully wrapped — felt like a gift.',
+    quote: 'Loved that I could pick my own colours. It arrived beautifully wrapped and honestly felt like a gift.',
     name: 'Meera K.',
     tag: 'Granny-Square Tote',
   },

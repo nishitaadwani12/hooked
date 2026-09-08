@@ -22,7 +22,7 @@ export default function Catalog({ onOrder }) {
           <span className="eyebrow">The shop</span>
           <h2 className="text-4xl font-extrabold text-cocoa sm:text-5xl">Browse the collection</h2>
           <p className="mt-3 max-w-md text-cocoa/60">
-            Everything is handmade to order — pick a piece and tell us your colours.
+            Everything's handmade to order. Pick a piece and tell us your colours.
           </p>
         </Reveal>
 

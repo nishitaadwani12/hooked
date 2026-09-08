@@ -44,7 +44,7 @@ export default function OrderForm({ selected }) {
     if (site.email) {
       const body = [...data.entries()].map(([k, v]) => `${k}: ${v}`).join('\n')
       window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-        `New order — ${site.brand}`,
+        `New order for ${site.brand}`,
       )}&body=${encodeURIComponent(body)}`
       setStatus('ok')
       return
@@ -67,8 +67,8 @@ export default function OrderForm({ selected }) {
             </span>
             <h2 className="mt-4 text-3xl font-extrabold text-cocoa">Let's make something for you</h2>
             <p className="mt-3 text-cocoa/80">
-              Tell us what you'd like and your colours. We'll reply with a quote and timeline —
-              usually made and shipped in about {site.leadTime}.
+              Tell us what you'd like and the colours you have in mind, and we'll get back to you
+              with a quote and timeline. Most pieces are made and posted in about {site.leadTime}.
             </p>
 
             {(site.instagram || site.email) && (
@@ -136,7 +136,7 @@ export default function OrderForm({ selected }) {
             )}
             {status === 'error' && (
               <p className="rounded-2xl bg-blush/70 px-4 py-3 text-sm font-semibold text-cocoa">
-                Something went wrong — please try again in a moment.
+                Something went wrong. Please try again in a moment.
               </p>
             )}
 
