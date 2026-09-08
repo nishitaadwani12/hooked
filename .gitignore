@@ -34,3 +34,6 @@ pnpm-debug.log*
 
 # vercel
 .vercel
+
+# sibling project (its own git repo)
+/rivaayat
